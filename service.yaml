@@ -2,11 +2,12 @@ apiVersion: v1
 kind: Service
 metadata:
   name: new-app-service  
+  namespace: default  # Explicitly define the namespace here
 spec:
   selector:
-    app: new-app 
+    app: new-app  # The selector to match the deployment's label
   ports:
     - protocol: TCP
-      port: 80 
-      targetPort: 3000  
-  type: ClusterIP 
+      port: 80  # External port to expose the service on
+      targetPort: 3000  # Internal port your app listens on
+  type: ClusterIP  # This can be changed to 'LoadBalancer' if you want external access
