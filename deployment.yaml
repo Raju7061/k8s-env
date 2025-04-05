@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: raju-app-deployment
+  namespace: default  # Specify the namespace where the deployment will occur
   labels:
     app: raju-app
 spec:
