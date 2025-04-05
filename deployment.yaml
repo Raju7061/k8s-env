@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: raju-app-deployment
+  labels:
+    app: raju-app
+spec:
+  replicas: 1  # You can increase the replicas as needed
+  selector:
+    matchLabels:
+      app: raju-app
+  template:
+    metadata:
+      labels:
+        app: raju-app
+    spec:
+      containers:
+        - name: raju-app
+          image: 2024dock/raju-app:1.3  # Your Docker image
+          ports:
+            - containerPort: 3000  # The port your application listens on
