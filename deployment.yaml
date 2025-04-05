@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: new-app-deployment  # Changed the name of the deployment
-  namespace: default  # Specify the namespace where the deployment will occur
+  name: new-app-deployment  
+  namespace: default  
   labels:
-    app: new-app  # Changed the label of the app
+    app: new-app  
 spec:
-  replicas: 1  # You can increase the replicas as needed
+  replicas: 1  
   selector:
     matchLabels:
-      app: new-app  # Updated the selector to match the new label
+      app: new-app  
   template:
     metadata:
       labels:
-        app: new-app  # Updated the label here as well
+        app: new-app  
     spec:
       containers:
-        - name: new-app  # Updated the container name
-          image: 2024dock/raju-app:1.3  # Your Docker image
+        - name: new-app  
+          image: 2024dock/raju-app:1.3  
           ports:
-            - containerPort: 3000  # The port your application listens on
+            - containerPort: 3000  
