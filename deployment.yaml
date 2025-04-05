@@ -2,11 +2,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: new-app-deployment  
-  namespace: default  
+  namespace: raju  
   labels:
     app: new-app  
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: new-app  
