@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: raju-app
+  labels:
+    app: raju-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: raju-app
+  template:
+    metadata:
+      labels:
+        app: raju-app
+    spec:
+      containers:
+        - name: raju-app
+          image: 2024dock/raju-app:1.4 # Update version here automatically
+          ports:
+            - containerPort: 3000

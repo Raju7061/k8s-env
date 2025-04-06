@@ -1,13 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: new-app-service  
-  namespace: raju  # Explicitly define the namespace here
+  name: raju-app-service
 spec:
   selector:
-    app: new-app  # The selector to match the deployment's label
+    app: raju-app
   ports:
     - protocol: TCP
-      port: 80  # External port to expose the service on
-      targetPort: 3000  # Internal port your app listens on
-  type: ClusterIP  # This can be changed to 'LoadBalancer' if you want external access
+      port: 80
+      targetPort: 3000
+  type: ClusterIP
