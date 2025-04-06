@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: raju-app
-  namespace: flux-system  # Add this line to specify the namespace
+  namespace: flux-system
   labels:
     app: raju-app
 spec:
@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
         - name: raju-app
-          image: 2024dock/raju-app:1.4 # Update version here automatically
+          image: 2024dock/raju-app:1.4  # Flux updates this automatically via kustomization
           ports:
             - containerPort: 3000
