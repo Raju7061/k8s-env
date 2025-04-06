@@ -4,8 +4,8 @@ kind: Kustomization
 resources:
   - deployment.yaml
   - service.yaml
-  - helmrelease.yaml  # Ensure this file exists in the repo
+  - helmrelease.yaml
 
 images:
   - name: 2024dock/raju-app
-    newTag: 
+    newTag: "25.3.1"  # Change this for new releases

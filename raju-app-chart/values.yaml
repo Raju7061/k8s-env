@@ -1,0 +1,9 @@
+image:
+  repository: 2024dock/raju-app
+  tag: "25.3.1"  # Change this tag when releasing a new version
+
+replicaCount: 2
+
+service:
+  type: ClusterIP
+  port: 80

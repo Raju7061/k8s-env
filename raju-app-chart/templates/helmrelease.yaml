@@ -4,17 +4,20 @@ metadata:
   name: raju-app
   namespace: flux-system
 spec:
-  interval: 5m
+  interval: 1m
   chart:
     spec:
-      chart: raju-app-chart  # Ensure this exists!
+      chart: raju-app-chart  # Name of the Helm chart in the repo
       sourceRef:
         kind: GitRepository
-        name: flux-system  # Ensure this matches your source
+        name: flux-system
         namespace: flux-system
       version: "0.1.0"
   values:
     image:
       repository: 2024dock/raju-app
-      tag: "25.3.1"
+      tag: "25.3.1"  # Change for new releases
     replicaCount: 2
+    service:
+      type: ClusterIP
+      port: 80

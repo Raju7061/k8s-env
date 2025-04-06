@@ -2,11 +2,10 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: raju-app
-  namespace: flux-system
   labels:
     app: raju-app
 spec:
-  replicas: 2  # Number of instances
+  replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app: raju-app
@@ -17,6 +16,6 @@ spec:
     spec:
       containers:
         - name: raju-app
-          image: 2024dock/raju-app:25.3.1  # Using your Docker image
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           ports:
-            - containerPort: 3000
+            - containerPort: 80
