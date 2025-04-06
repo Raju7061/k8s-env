@@ -1,6 +1,0 @@
-apiVersion: v2
-name: raju-app
-description: A Helm chart for raju-app
-version: 0.1.0
-appVersion: "25.3.1"
-EOF
