@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - deployment.yaml
   - service.yaml
+  - helmrelease.yaml
 
 images:
   - name: 2024dock/raju-app
