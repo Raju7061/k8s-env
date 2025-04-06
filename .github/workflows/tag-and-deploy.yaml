@@ -1,0 +1,46 @@
+name: Auto Tag & Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  tag-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set release version (YY.MM.DD)
+        id: set_version
+        run: echo "VERSION=$(date +'%y.%m.%d')" >> $GITHUB_ENV
+
+      - name: Create and push new Git tag
+        run: |
+          git tag $VERSION
+          git push origin $VERSION
+        env:
+          VERSION: ${{ env.VERSION }}
+
+  update-manifest:
+    needs: tag-release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Update Kubernetes manifests with new tag
+        run: |
+          sed -i "s|newTag: .*|newTag: $VERSION|" kustomization.yaml
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add kustomization.yaml
+          git commit -m "Updated image tag to $VERSION"
+          git push
+        env:
+          VERSION: ${{ env.VERSION }}
+
