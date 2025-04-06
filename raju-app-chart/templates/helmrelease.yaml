@@ -16,7 +16,7 @@ spec:
   values:
     image:
       repository: 2024dock/raju-app
-      tag: "25.3.1"  # Change for new releases
+      tag: "1.4"  # Change for new releases
     replicaCount: 2
     service:
       type: ClusterIP
