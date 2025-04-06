@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: raju-app-service
-  namespace: flux-system
+  namespace: flux-system  # Ensure this matches your Flux namespace
   labels:
     app: raju-app
 spec:
@@ -11,6 +11,6 @@ spec:
   ports:
     - name: http
       protocol: TCP
-      port: 80
-      targetPort: 3000
+      port: 80  # Exposed port
+      targetPort: 3000  # Container's port
   type: ClusterIP
