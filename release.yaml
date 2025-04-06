@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: raju-app
+  namespace: flux-system  # Add this line to specify the namespace
   labels:
     app: raju-app
 spec:
