@@ -22,17 +22,35 @@ jobs:
 
       - name: Create and Push Git Tag
         run: |
-          git tag ${{ github.event.inputs.version }}
-          git push origin ${{ github.event.inputs.version }}
+          if git rev-parse ${{ github.event.inputs.version }} >/dev/null 2>&1; then
+            echo "Tag already exists. Skipping tag creation."
+          else
+            git tag ${{ github.event.inputs.version }}
+            git push origin ${{ github.event.inputs.version }}
+          fi
+
+      - name: Verify kustomization.yaml exists
+        run: |
+          if [ ! -f "raju-app-chart/templates/kustomization.yaml" ]; then
+            echo "Error: kustomization.yaml not found!"
+            exit 1
+          fi
 
       - name: Update Kubernetes manifests with new tag
-        run: sed -i "s|newTag: .*|newTag: ${{ github.event.inputs.version }}|" raju-app-chart/templates/kustomization.yaml
+        run: sed -i "s|newTag:.*|newTag:${{ github.event.inputs.version }}|" raju-app-chart/templates/kustomization.yaml
 
       - name: Commit and push changes
         run: |
           git add raju-app-chart/templates/kustomization.yaml
           git commit -m "Updated kustomization.yaml with new tag ${{ github.event.inputs.version }}"
           git push origin main
+
+      - name: Install Flux CLI (if missing)
+        run: |
+          if ! command -v flux &> /dev/null; then
+            echo "Flux not found. Installing..."
+            curl -s https://fluxcd.io/install.sh | sudo bash
+          fi
 
       - name: Flux Reconcile
         run: flux reconcile ks -n flux-system
