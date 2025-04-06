@@ -4,17 +4,21 @@ metadata:
   name: raju-app
   namespace: flux-system
 spec:
+  interval: 5m  # Define how often Flux should check for updates
   releaseName: raju-app
-  interval: 1m
   chart:
     spec:
-      chart: ./raju-app-chart  # This path must exist in your repo!
+      chart: raju-app-chart  # Name of your Helm chart
       sourceRef:
         kind: GitRepository
-        name: flux-system
+        name: flux-system  # Change if using another repo
         namespace: flux-system
       version: "0.1.0"
   values:
     image:
       repository: 2024dock/raju-app
-      tag: "25.3.1"
+      tag: "25.3.1"  # Automatically update this when releasing a new version
+    replicaCount: 2
+    service:
+      type: ClusterIP
+      port: 80
