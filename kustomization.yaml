@@ -8,4 +8,4 @@ resources:
 
 images:
   - name: 2024dock/raju-app
-    newTag: 
+    newTag: "25.3.1" 
