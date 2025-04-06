@@ -12,22 +12,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set release version (YY.MM.DD)
+        id: set_version
+        run: echo "VERSION=$(date +'%y.%m.%d')" >> $GITHUB_ENV
+
       - name: Configure Git
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
 
       - name: Authenticate using PAT
-        run: git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/Raju7061/k8s-env.git
-
-      - name: Set release version (YY.MM.DD)
-        id: set_version
-        run: echo "VERSION=$(date +'%y.%m.%d')" >> $GITHUB_ENV
+        run: git remote set-url origin https://x-access-token:${{ secrets.GH_WORKFLOW_PAT }}@github.com/Raju7061/k8s-env.git
 
       - name: Create and push new Git tag
         run: |
           git tag $VERSION
-          git push origin $VERSION
+          git push https://x-access-token:${{ secrets.GH_WORKFLOW_PAT }}@github.com/Raju7061/k8s-env.git $VERSION
         env:
           VERSION: ${{ env.VERSION }}
 
@@ -38,22 +38,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Update Kubernetes manifests with new tag
+        run: |
+          sed -i "s|newTag: .*|newTag: $VERSION|" kustomization.yaml
+
       - name: Configure Git
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
 
-      - name: Authenticate using PAT
-        run: git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/Raju7061/k8s-env.git
-
-      - name: Update Kubernetes manifests with new tag
-        run: |
-          sed -i "s|newTag: .*|newTag: $VERSION|" kustomization.yaml
+      - name: Authenticate using Repo PAT
+        run: git remote set-url origin https://x-access-token:${{ secrets.GH_REPO_PAT }}@github.com/Raju7061/k8s-env.git
 
       - name: Commit and push changes
         run: |
           git add kustomization.yaml
           git commit -m "Updated image tag to $VERSION"
-          git push origin main
+          git push https://x-access-token:${{ secrets.GH_REPO_PAT }}@github.com/Raju7061/k8s-env.git
         env:
           VERSION: ${{ env.VERSION }}
