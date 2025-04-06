@@ -5,4 +5,4 @@ resources:
   - service.yaml
 images:
   - name: 2024dock/raju-app
-    newTag: "25.04.6"  # Update automatically with GitHub Actions
+    newTag: 
