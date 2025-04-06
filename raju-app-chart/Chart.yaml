@@ -3,5 +3,5 @@ name: raju-app-chart
 description: A Helm chart for deploying raju-app
 type: application
 version: 0.1.0  # Chart version, update when making changes
-appVersion: "25.3.1"  # This should match your Docker image tag
+appVersion: "1.4"  # This should match your Docker image tag
 
